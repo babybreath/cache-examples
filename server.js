@@ -24,7 +24,7 @@ if(argv && argv[0]){
     ETAG_ENABLE = true;
   }
   if(argv[0].indexOf('m') !== -1){
-    console.log('开启max-age');
+    console.log('开启max-age 当前max-age=' + MAX_AGE_VALUE);
     MAX_AGE = true;
   }
 }

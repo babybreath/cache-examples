@@ -114,7 +114,25 @@ manifest文件建议后缀名为.appcache
 
 查看示例: 运行 node server.js 打开 http://127.0.0.1:3000/demo2/index.html  
 第一次请求:浏览器正常加载页面,在页面资源加载成功下载manifest文件  
-后续请求:浏览器只检查manifest文件是否更新,若更新则重新下载所有缓存文件
+后续请求:浏览器只检查manifest文件是否更新,若更新则重新下载所有缓存文件,否则使用缓存
+#### applicationCache api
+``` js
+
+  var appcache = window.applicationCache;
+  // 查询manifest是否有更新
+  appcache.update();
+
+  //判断缓存是否已更新
+  if(appcache.status === appcache.UPDATEREADY){
+    // 缓存文件替换
+    appcache.swapCache();
+  }
+
+```
+#### 注意
+浏览器检查到manifest文件有更新,重新下载文件是滞后处理(即当前还是使用旧的文件),第二次刷新页面才使用新的缓存
+
+
 
 ### 六 CacheStorage
 
