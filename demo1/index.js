@@ -1,5 +1,5 @@
 // 这是index.js
-
+'123'
 console.log('请通过chrome控制台-resources查看');
 var item1 = {
   name: 'item1',

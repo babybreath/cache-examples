@@ -4,6 +4,7 @@ const http = require('http');
 const url = require('url');
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 const hostname = '127.0.0.1';
 const port = 3000;
@@ -55,7 +56,7 @@ const server = http.createServer((req, res) => {
           res.setHeader('cache-control', 'max-age=' + MAX_AGE_VALUE);
         }
         if(ETAG_ENABLE){
-          let etag = 'xxxx';  // 可设置为文件md5值
+          let etag = md5(realPath);
           res.setHeader('etag', etag);
           res.setHeader('cache-control', 'no-cache');
           if(req.headers['if-none-match'] && req.headers['if-none-match'] === etag){
@@ -64,6 +65,7 @@ const server = http.createServer((req, res) => {
             res.end();
             return;
           }
+
         }
         if(LAST_MODIFIED_ENABLE){
           res.setHeader('last-modified', stats.mtime.toGMTString());
@@ -93,3 +95,13 @@ const server = http.createServer((req, res) => {
 server.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
+
+
+
+// 计算md5 同步方式
+function md5(filename){
+  let content = fs.readFileSync(filename);
+  let md5 = crypto.createHash('md5');
+  md5.update(content);
+  return md5.digest('hex');
+}
