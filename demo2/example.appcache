@@ -1,5 +1,7 @@
 CACHE MANIFEST
-#VERSION 1.2
+#VERSION 1.4
 CACHE:
 index.css
 index.js
+NETWORK:
+*
